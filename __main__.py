@@ -1,4 +1,6 @@
 from .src.parser import parse_input
+from .src.generator import generate_result
+from .src.complex import Complex
 
 def print_help():
     print("""Welcome to e-calc!
@@ -20,7 +22,9 @@ def main():
                     print_help()
 
                 case _:
-                    parse_input(usrIn)
+                    tokenised = parse_input(usrIn)
+                    result = generate_result(tokenised)
+                    print(result)
 
         except KeyboardInterrupt:
             print("\nExiting e-calc...")
