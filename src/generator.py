@@ -141,33 +141,3 @@ def generate_result(expr):
     g = Generator(expr)
     return g.evaluate()
 
-
-    # def match_expr(self, expr): 
-    #     print(f"Match! {expr}")
-    #     for idx, ele in enumerate(expr): # not currently left-associative
-    #         match ele:
-    #             case '-':
-    #                 return self.subtract(expr[0:idx], expr[idx + 1:])
-    #
-    #     for idx, ele in enumerate(expr):
-    #         match ele:
-    #             case '+':
-    #                 return self.add(expr[0:idx], expr[idx + 1:])
-    #
-    #     for idx, ele in enumerate(expr):
-    #         match ele:
-    #             case '*':
-    #                 return self.multiply(expr[0:idx], expr[idx + 1:])
-    #
-    #
-    #     for idx, ele in enumerate(expr): # not currently left-associative
-    #         match ele:
-    #             case '/':
-    #                 return self.divide(expr[0:idx], expr[idx + 1:])
-    #
-    #
-    #     for idx, ele in enumerate(expr):
-    #         match ele:
-    #             case '(':
-    #                    return self.brackets(expr[1:-1])
-    #
