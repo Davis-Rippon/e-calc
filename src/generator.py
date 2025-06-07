@@ -5,22 +5,19 @@ class Generator():
     """
     Language Rules:
 
-        S -> z_expr                                   print
-        S -> v_expr                                   print
+        S -> expr                                   print
 
-        z_expr -> expr + expr                         add(expr, expr)
-        z_expr -> expr / expr                         divide(expr, expr)
-        z_expr -> expr | expr                         parallel(expr, expr)
-        z_expr -> ( z_expr )                          return z_expr
-        z_expr ->  number                             parse_number(number)
+        expr -> expr + expr                         add(expr, expr)
+        expr -> expr / expr                         divide(expr, expr)
+        expr -> expr - expr                         subtract(expr, expr)
+        expr -> expr | expr                         parallel(expr, expr)
+        expr -> ( expr )                            return expr
 
-        v_expr -> vdiv(z_expr, z_expr, v_expr)        vdiv(z_expr, z_expr, v_expr)
-        v_expr -> toCart(number, sinusoid, number)    toCart(number, sinusoid, number)
-        v_expr -> ( v_expr )                          return z_expr
-        v_expr -> ( v_expr )                          return z_expr
+        expr ->  number                             return Complex(number)
+        expr ->  cnumber                            return Complex(0, number)
 
-        number -> number                                return Complex(number)
-        cnumber -> imaginary number                     return Complex(0, number)
+        number -> CNUM                              return Complex(number)
+        cnumber -> CNUM                             return Complex(0, number)
 
     """
 
