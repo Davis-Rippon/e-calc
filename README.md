@@ -9,12 +9,12 @@ Here it is evaluating a circuit analysis practice question:
 
 ## Some High-Level Details
 e-calc takes an expression:
-```
+```python
 vdiv(1 | 2, -5/(2j + 3), toCart(5, cos, 90))
 ```
 
 Tokenises it (through a custom parser):
-```
+```python
 [')', ')', 90.0, ',', 'cos', ',', 5.0, '(', 'toCart', ',', ')', 3.0, '+', 'j', 2.0, '(', '/', 5.0, '*', -1.0, ',', 2.0, '|', 1.0, '(', 'vdiv']
 ```
 _Note: It's reversed as division is left-associative, i.e. 1/2/2 = (1/2)/2, not 1/(2/2)_
@@ -31,9 +31,10 @@ Then grammar rules are applied, defined recursively as follows:
         expr -> expr | expr                         parallel(expr, expr)
         expr -> ( expr )                            return expr
 
-        expr -> function (arg, arg, ...)            function(arg, arg, ...)
+        expr -> function(arg|STR, arg|STR, ...)     function(arg|STR, arg|STR, ...)
 
         arg -> expr                                 -
+        arg -> STR                                  -
 
         expr ->  number                             -
         expr ->  cnumber                            -
