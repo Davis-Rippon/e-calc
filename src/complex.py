@@ -1,7 +1,12 @@
+from decimal import Decimal, getcontext
+
+
 class Complex:
     def __init__(self, Re:float=0, Im:float=0):
-        self.real = Re
-        self.imag = Im
+        self.real = Decimal(Re)
+        self.imag = Decimal(Im)
+
+        # self.tolerance = Complex(10**-10)
 
 
     def __add__(self, other):
@@ -24,10 +29,17 @@ class Complex:
         return Complex(real, imag)
     
     def __or__(self, other):
+        # if (Complex(1)/self + Complex(1)/other) - self.tolerance < Complex(0): 
+        #     return 0
+        # TODO implement comparison
+
         return Complex(1)/(Complex(1)/self + Complex(1)/other)
 
     def __str__(self):
-        re = str(self.real) if self.real != 0 else ""
-        im = str(self.imag) + 'j' if self.imag != 0 else ""
+        real = self.real.quantize(Decimal('0.00000001'))
+        imag = self.imag.quantize(Decimal('0.00000001'))
+
+        re = f'{real}' if self.real != 0 else ""
+        im = str(imag) + 'j' if self.imag != 0 else ""
 
         return f"{re} {im}"
