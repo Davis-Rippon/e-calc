@@ -30,8 +30,8 @@ class Generator():
 
         for op, method in [('-', self.subtract), 
                            ('+', self.add), 
-                           ('*', self.multiply), 
                            ('|', self.parallel),
+                           ('*', self.multiply), 
                            ('/', self.divide)]:
 
             bFlag = 0
@@ -41,6 +41,7 @@ class Generator():
                 elif ele == ')':
                     bFlag -= 1
 
+                # print(op)
                 if (ele == op) & (bFlag == 0):
                     return method(expr[idx + 1:], expr[0:idx])
 
@@ -48,28 +49,34 @@ class Generator():
 
         for name, function in FUNCTIONS_TABLE:
             if expr[len(expr) - 1]== name:
-                args = expr[1:-2][::-1]
+                args = expr[1:-2]
 
                 ele = None
                 arglist = []
                 current = []
+                bFlag = 0
                 for ele in args:
-                    if ele == ',':
+                    if ele == '(':
+                        bFlag += 1
+                    elif ele == ')':
+                        bFlag -= 1
+                    if (ele == ',') & (bFlag == 0):
                         arglist.append(current)
                         current = []
                         continue
                     current.append(ele)
 
                 if ele is not None:
-                    arglist.append(ele)
+                    arglist.append(current)
 
-                print(f"ARGS: {arglist}")
                 evaluated_arguments = []
                 for argument in arglist:
-                    print(argument)
                     evaluated_arguments.append(self.match_expr(argument))
 
-                print(evaluated_arguments)
+                evaluated_arguments = evaluated_arguments[::-1]
+
+                for a in evaluated_arguments:
+                    return function(*evaluated_arguments)
 
 
 
@@ -78,6 +85,9 @@ class Generator():
 
         for idx, ele in enumerate(expr):
             match ele:
+                case sinusoid if sinusoid == "sin" or sinusoid == "cos":
+                    return sinusoid
+
                 case num if isinstance(num, float) & len(expr) == 1:
                     return Complex(ele)
 
@@ -103,6 +113,8 @@ class Generator():
     def divide(self, expr1, expr2):
         l = self.match_expr(expr1)
         r = self.match_expr(expr2)
+
+        # print(f"LEFT: {l} RIGHT: {r}")
 
         return l / r
 
