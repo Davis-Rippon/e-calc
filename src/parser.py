@@ -96,7 +96,6 @@ class Parser:
 
                     case function if function in ALPHABET:
                         out = self.pfunc()
-                        print(f"Function out: {out}")
 
                     case Op if Op in "-+/|*":
                         out = Op
@@ -105,9 +104,9 @@ class Parser:
                         # special case where negative means -1*
                         if Op == '-':
                             if self.expr_string[self.char_idx - 1] in "-+/|*":
-                                self.tokenised_string.append('(')
+                                # self.tokenised_string.append('(')
                                 self.tokenised_string.append(float(-1))
-                                self.tokenised_string.append(')')
+                                # self.tokenised_string.append(')')
                                 out = '*'
 
                     case X if X == 'j':
