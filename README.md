@@ -13,7 +13,7 @@ e-calc takes an expression:
 vdiv(1 | 2, -5/(2j + 3), toCart(5, cos, 90))
 ```
 
-Tokenises it (through a custom parser):
+Tokenises it (through a custom lexer):
 ```python
 [')', ')', 90.0, ',', 'cos', ',', 5.0, '(', 'toCart', ',', ')', 3.0, '+', 'j', 2.0, '(', '/', 5.0, '*', -1.0, ',', 2.0, '|', 1.0, '(', 'vdiv']
 ```
