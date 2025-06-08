@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: e-calc
+Version: 0.1.0
+Summary: An electrical calculator CLI tool
+Author-email: Davis Rippon <your@email.com>
+License-Expression: MIT
+Requires-Python: >=3.10

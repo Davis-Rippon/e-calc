@@ -2,7 +2,7 @@ from .functions import FUNCTIONS_TABLE
 
 ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZabcdefghiklmnopqrstuvwxyz"
 
-class Parser:
+class Lexer:
     UNIT_PREFIXES = { 
             "G": 10**9,    # giga
             "M": 10**6,    # mega
@@ -41,14 +41,14 @@ class Parser:
 
         output = float(output)
 
-        if ch in Parser.UNIT_PREFIXES:
-            output *= Parser.UNIT_PREFIXES[ch]
+        if ch in Lexer.UNIT_PREFIXES:
+            output *= Lexer.UNIT_PREFIXES[ch]
 
         while ch == " ":
             self.char_idx += 1
             ch = self.expr_string[self.char_idx]
-            if ch in Parser.UNIT_PREFIXES:
-                output *= Parser.UNIT_PREFIXES[ch]
+            if ch in Lexer.UNIT_PREFIXES:
+                output *= Lexer.UNIT_PREFIXES[ch]
 
         return output # is it better to return outputs or add them to class' list?
 
@@ -101,9 +101,10 @@ class Parser:
                         out = Op
                         self.char_idx += 1
 
+
                         # special case where negative means -1*
-                        if Op == '-':
-                            if self.expr_string[self.char_idx - 1] in "-+/|*":
+                        if (Op == '-'):
+                            if self.tokenised_string[-1] in "(,-+/|*":
                                 # self.tokenised_string.append('(')
                                 self.tokenised_string.append(float(-1))
                                 # self.tokenised_string.append(')')
@@ -135,7 +136,7 @@ class Parser:
 
 
 def parse_input(expr):
-    p = Parser(expr)
+    p = Lexer(expr)
     return p.parse()
 
 

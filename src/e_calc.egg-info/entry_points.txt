@@ -1,0 +1,2 @@
+[console_scripts]
+ecalc = ecalc.__main__:main

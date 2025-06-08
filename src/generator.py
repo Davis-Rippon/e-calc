@@ -5,13 +5,15 @@ class Generator():
     """
     Language Rules:
 
-        S -> expr                                   print
+        S -> expr                                   -
 
         expr -> expr + expr                         add(expr, expr)
         expr -> expr / expr                         divide(expr, expr)
         expr -> expr - expr                         subtract(expr, expr)
         expr -> expr | expr                         parallel(expr, expr)
         expr -> ( expr )                            return expr
+
+        expr -> function (expr, expr, ...)          function(expr, expr, ...)
 
         expr ->  number                             return Complex(number)
         expr ->  cnumber                            return Complex(0, number)
@@ -28,8 +30,8 @@ class Generator():
     def match_expr(self, expr): 
         print(f"Match! {expr}")
 
-        for op, method in [('-', self.subtract), 
-                           ('+', self.add), 
+        for op, method in [('+', self.add), 
+                           ('-', self.subtract), 
                            ('|', self.parallel),
                            ('*', self.multiply), 
                            ('/', self.divide)]:
@@ -97,10 +99,6 @@ class Generator():
                 case complexnum2 if (isinstance(expr[1], float) & (len(expr) == 2) & (expr[0] == 'j')):
                     return Complex(0, expr[1])
 
-
-        
-
-
     def brackets(self, expr):
         """
         Evaluate inside brackets
@@ -138,6 +136,7 @@ class Generator():
         return l + r
 
     def subtract(self, expr1, expr2):
+
         l = self.match_expr(expr1)
         r = self.match_expr(expr2)
 
