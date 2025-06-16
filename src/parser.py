@@ -1,4 +1,6 @@
+from ecalc.src import pager
 from .functions import FUNCTIONS_TABLE
+from .pager import pager
 
 ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZabcdefghiklmnopqrstuvwxyz"
 
@@ -42,12 +44,14 @@ class Lexer:
         output = float(output)
 
         if ch in Lexer.UNIT_PREFIXES:
+            self.char_idx += 1
             output *= Lexer.UNIT_PREFIXES[ch]
 
         while ch == " ":
             self.char_idx += 1
             ch = self.expr_string[self.char_idx]
             if ch in Lexer.UNIT_PREFIXES:
+                self.char_idx += 1
                 output *= Lexer.UNIT_PREFIXES[ch]
 
         return output # is it better to return outputs or add them to class' list?
@@ -67,24 +71,44 @@ class Lexer:
                     if output == name:
                         return name
 
+                out = pager.find(output)
+                if out is not None:
+
+                    self.tokenised_string.append('(')
+                    self.tokenised_string.append(float(out.real))
+
+                    if out.imag != 0:
+                        self.tokenised_string.append('+')
+                        self.tokenised_string.append(float(out.imag))
+                        self.tokenised_string.append('j')
+
+                    return ')'
                 return None
 
         for name, _ in FUNCTIONS_TABLE:
             if output == name:
                 return name
 
+        print(output)
+        out = pager.find(output)
+
+        if out is not None:
+
+            self.tokenised_string.append('(')
+            self.tokenised_string.append(float(out.real))
+
+            if out.imag != 0:
+                self.tokenised_string.append('+')
+                self.tokenised_string.append(float(out.imag))
+                self.tokenised_string.append('j')
+
+            return ')'
+
         return None
+            
+
 
     def parse(self) -> list[str]:
-        """
-        Tokens in the language being parsed:
-            Phasor Domain:
-                X
-                Voltage:
-
-            
-            
-        """
 
         while True:
             try:
