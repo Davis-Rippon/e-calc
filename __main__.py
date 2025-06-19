@@ -2,10 +2,10 @@ from .src.parser import parse_input
 from .src.generator import generate_result
 from .src.complex import Complex
 from .src.pager import pager
+import argparse
+import sys
 import readline
 import traceback
-from sympy import symbols, Eq, solve, sympify, I
-from sympy.core.sympify import SympifyError
 
 def print_help():
     print("""
@@ -47,36 +47,23 @@ def print_help():
                   Find the complex conjugate of expr
 
           Solver:
+          If ran with the '-s' flag, e-calc can solve simultaneous equations:
+            
+            Example Usage:
+              > se
+              Equation 1: x + 1 = y
+              Equation 2: y*j - 13 = z
+              Equation 3: z + x = 12
+              variables (space-separated): x y z
+              Solution:
+                x = 12 - 13*j
+                y = 13 - 13*j
+                z = 13*j
 
 """)
 
 
 
-def solve_simultaneous_sympy(equations, variable_string):
-    # Define variables as sympy symbols plus 'j' for imaginary unit
-    vars = symbols(variable_string)
-    
-    # Define a local dictionary to map 'j' to imaginary unit I when sympifying
-    local_dict = {'j': I}
-    
-    eqs = []
-    for eq in equations:
-        try:
-            if '=' not in eq:
-                continue
-            left, right = eq.split('=')
-            eqs.append(Eq(sympify(left.strip(), locals=local_dict),
-                          sympify(right.strip(), locals=local_dict)))
-        except (ValueError, SympifyError) as e:
-            print(f"Skipping invalid equation: {eq} — {e}")
-            continue
-
-    if not eqs:
-        return "No valid equations provided."
-
-    solution = solve(eqs, vars, dict=True)
-
-    return solution if solution else "No solution or infinitely many solutions."
 
 
 
@@ -84,6 +71,15 @@ def main():
     print("Welcome to e-calc v0.0. Type \"help\" for list of commands.")
     stackTrace = None
 
+    sm = 0
+    ps = argparse.ArgumentParser()
+    ps.add_argument('-s', '--solver', action='store_true',
+                        help='Enable Solver (slower startup)')
+
+    args = ps.parse_args()
+
+    if args.solver:
+        sm = 1
 
     while True:
 
@@ -126,27 +122,31 @@ def main():
                         print("Error in assignment.")
 
                 case "se":
-                    try:
-                        equations = []
+                    if sm:
+                        try:
+                            equations = []
 
-                        equations.append(input("Equation 1: "))
-                        equations.append(input("Equation 2: "))
-                        equations.append(input("Equation 3: "))
+                            equations.append(input("Equation 1: "))
+                            equations.append(input("Equation 2: "))
+                            equations.append(input("Equation 3: "))
 
-                        variables = input("variables (space-separated): ")
+                            variables = input("variables (space-separated): ")
 
-                        solutions = solve_simultaneous_sympy(equations, variables)
+                            solutions = solve_simultaneous_sympy(equations, variables)
 
-                        if solutions:
-                            for sol in solutions:
-                                print("Solution:")
-                                for var, val in sol.items():
-                                    print(f"  {var} = {val}")
-                        else:
-                            print("No solution or infinite solutions")
-                    except Exception as e:
-                        print(f"An error occured ({e}). Type \"st\" to view Stack Trace") 
-                        stackTrace = traceback.format_exc()
+                            if solutions:
+                                for sol in solutions:
+                                    print("Solution:")
+                                    for var, val in sol.items():
+                                        print(f"  {var} = {val}")
+                            else:
+                                print("No solution or infinite solutions")
+                        except Exception as e:
+                            print(f"An error occured ({e}). Type \"st\" to view Stack Trace") 
+                            stackTrace = traceback.format_exc()
+                        
+                    else:
+                        print("Simultaneous Equation Solver Disabled. Run e-calc with -s flag to enable.")
 
                 case "sr":
                     try:
@@ -170,3 +170,31 @@ def main():
             print("\nExiting e-calc...")
             return
 
+
+def solve_simultaneous_sympy(equations, variable_string):
+    from sympy import symbols, Eq, solve, sympify, I
+    from sympy.core.sympify import SympifyError
+    # Define variables as sympy symbols plus 'j' for imaginary unit
+    vars = symbols(variable_string)
+    
+    # Define a local dictionary to map 'j' to imaginary unit I when sympifying
+    local_dict = {'j': I}
+    
+    eqs = []
+    for eq in equations:
+        try:
+            if '=' not in eq:
+                continue
+            left, right = eq.split('=')
+            eqs.append(Eq(sympify(left.strip(), locals=local_dict),
+                          sympify(right.strip(), locals=local_dict)))
+        except (ValueError, SympifyError) as e:
+            print(f"Skipping invalid equation: {eq} — {e}")
+            continue
+
+    if not eqs:
+        return "No valid equations provided."
+
+    solution = solve(eqs, vars, dict=True)
+
+    return solution if solution else "No solution or infinitely many solutions."
