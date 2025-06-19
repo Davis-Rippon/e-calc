@@ -1,4 +1,4 @@
-from ecalc.src import pager
+from . import pager
 from .functions import FUNCTIONS_TABLE
 from .pager import pager
 

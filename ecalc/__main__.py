@@ -1,7 +1,7 @@
-from .src.parser import parse_input
-from .src.generator import generate_result
-from .src.complex import Complex
-from .src.pager import pager
+from .parser import parse_input
+from .generator import generate_result
+from .complex import Complex
+from .pager import pager
 import argparse
 import sys
 import readline
