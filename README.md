@@ -20,8 +20,9 @@ Here it is evaluating a circuit analysis practice question:
 
 ## Install
 
+```
 git clone git@github.com:Davis-Rippon/e-calc.git
-python 
+```
 
 
 ## Some High-Level Details
