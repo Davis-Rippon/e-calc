@@ -1,11 +1,71 @@
 # e-calc 
-Python script for evaluating circuit/electrical engineering calculations. To be used in exams!
+Python script for evaluating circuit/electrical engineering calculations.
+
+## Features
+- Capable of evaluatuating **complex expressions**, making 
+- Many [functions](#Functions) for common uses in circuit analysis
+- CLI-based for quick
+
+I made this for my Electric Circuits exam, and it made 
 
 ## Example Usage
 
 Here it is evaluating a circuit analysis practice question:
 
 ![Example Usage](images/term_recording.gif)
+
+## Functions
+
+### `toCart(magnitude, "cos" or "sin", phase (degrees))`
+Convert a sinusoid to its Cartesian complex equivalent.
+
+Example: `toCart(10, sin, -90)`
+
+---
+
+### `vdiv(Voltage, r1, r2)`
+Do a voltage divider, finding the voltage across `r1`.
+
+---
+
+### `toPhasor(expr)`
+Print the Phasor representation of a complex number value.
+
+---
+
+### `cdiv(Current, r1, r2)`
+Do a current divider, finding the current across `r1`.
+
+---
+
+### `pow(x, y)`
+Compute `x^y`.
+
+---
+
+### `capz(frequency, capacitance)`
+Find the impedance of a capacitor.
+
+---
+
+### `indz(frequency, inductance)`
+Find the impedance of an inductor.
+
+---
+
+### `mag(expr)`
+Find the magnitude of `expr`.
+
+---
+
+### `conj(expr)`
+Find the complex conjugate of `expr`.
+
+## Install
+
+git clone git@github.com:Davis-Rippon/e-calc.git
+python 
+
 
 ## Some High-Level Details
 e-calc takes an expression:
