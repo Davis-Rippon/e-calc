@@ -2,15 +2,18 @@
 name = "ecalc"
 version = "0.1.0"
 description = "An electrical calculator CLI tool"
-authors = [{ name = "Davis Rippon", email = "" }]
-license = "MIT"
+authors = [{ name = "Davis Rippon"}]
+license = { text = "MIT" }
 requires-python = ">=3.10"
-dependencies = ["sympy>=1.12"]  # only uses stdlib
+dependencies = ["sympy>=1.12"]
 
 [project.scripts]
 e-calc = "ecalc.__main__:main"
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["ecalc"]
 
