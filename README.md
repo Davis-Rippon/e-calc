@@ -22,8 +22,19 @@ Here it is evaluating a circuit analysis practice question:
 
 ```
 git clone git@github.com:Davis-Rippon/e-calc.git
+pip install -e .
 ```
+(You can also use ```pipx install -e .```)
 
+After that you should see:
+```
+Installing to existing venv 'ecalc'
+  installed package ecalc 0.1.0, installed using Python 3.13.3
+  These apps are now globally available
+    - e-calc
+done! ✨ 🌟 ✨
+```
+Then just type ```e-calc``` and it will run
 
 ## Some High-Level Details
 e-calc takes an expression:
