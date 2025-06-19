@@ -2,64 +2,21 @@
 Python script for evaluating circuit/electrical engineering calculations.
 
 ## Features
-- Capable of evaluatuating **complex expressions**, making 
-- Many [functions](#Functions) for common uses in circuit analysis
-- CLI-based for quick
+- Capable of evaluatuating **complex expressions**, making AC analysis quick
+and easy
+- Many [functions](docs/functions.md) for common uses in circuit analysis
+- CLI-based for fast startup
+- Macros for SI unit values ('1k' = 1000, '1M' = 1000000)
 
-I made this for my Electric Circuits exam, and it made 
+I made this for my Electric Circuits exam, and it made calculations extremely 
+quick and easy.
 
 ## Example Usage
 
 Here it is evaluating a circuit analysis practice question:
 
-![Example Usage](images/term_recording.gif)
+![Example Usage](docs/term_recording.gif)
 
-## Functions
-
-### `toCart(magnitude, "cos" or "sin", phase (degrees))`
-Convert a sinusoid to its Cartesian complex equivalent.
-
-Example: `toCart(10, sin, -90)`
-
----
-
-### `vdiv(Voltage, r1, r2)`
-Do a voltage divider, finding the voltage across `r1`.
-
----
-
-### `toPhasor(expr)`
-Print the Phasor representation of a complex number value.
-
----
-
-### `cdiv(Current, r1, r2)`
-Do a current divider, finding the current across `r1`.
-
----
-
-### `pow(x, y)`
-Compute `x^y`.
-
----
-
-### `capz(frequency, capacitance)`
-Find the impedance of a capacitor.
-
----
-
-### `indz(frequency, inductance)`
-Find the impedance of an inductor.
-
----
-
-### `mag(expr)`
-Find the magnitude of `expr`.
-
----
-
-### `conj(expr)`
-Find the complex conjugate of `expr`.
 
 ## Install
 
